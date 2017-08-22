@@ -1,0 +1,34 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+struct stu{
+    string name;
+    string lect;
+    int grade;
+};
+bool cmp(stu a,stu b){
+    return a.grade>b.grade;
+}
+int main(){
+    int n;
+    cin>>n;
+    vector<stu> vec(n);
+    for(int i=0;i<n;i++){
+        cin>>vec[i].name>>vec[i].lect>>vec[i].grade;
+    }
+    int a,b;
+    cin>>a>>b;
+    sort(vec.begin(),vec.end(),cmp);
+    bool flag=false;
+    for(int i=0;i<n;i++){
+        if(vec[i].grade>=a&&vec[i].grade<=b){
+            flag=true;
+            cout<<vec[i].name<<' '<<vec[i].lect<<endl;
+        }
+    }
+    if(flag==false)
+        cout<<"NONE"<<endl;
+    return 0;
+}
