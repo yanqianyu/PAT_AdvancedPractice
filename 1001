@@ -1,0 +1,73 @@
+#include <iostream>
+#include <vector>
+#include <math.h>
+using namespace std;
+long gcd(long a,long b){
+    long r=b;
+    while(r!=0){
+        r=b%a;
+        b=a;
+        a=r;
+    }
+    return b;
+}
+int main(){
+    int n;
+    cin>>n;
+    vector<string> vec(n);
+    for(int i=0;i<n;i++){
+        cin>>vec[i];
+    }
+    vector<int> fenzi;
+    vector<int> fenmu;
+    int i,j;
+    for(i=0;i<n;i++){
+        int count=0;
+        bool flag=true;
+        if(vec[i][0]=='-')
+            flag=false;
+        for(j=0;j<vec[i].size();j++){
+            if(vec[i][j]>='0'&&vec[i][j]<='9'){
+                count=count*10+vec[i][j]-'0';
+            }
+            else if(vec[i][j]=='/')
+                break;
+        }
+        if(flag)
+            fenzi.push_back(count);
+        else
+            fenzi.push_back(-count);
+        count=0;
+        for(j++;j<vec[i].size();j++){
+            if(vec[i][j]>='0'&&vec[i][j]<='9'){
+                count=count*10+vec[i][j]-'0';
+            }
+        }
+        fenmu.push_back(count);
+    }
+    long long sum=1;
+    long long fen=0;
+    for(int i=0;i<fenmu.size();i++){
+        sum*=fenmu[i];
+    }
+    for(int i=0;i<fenzi.size();i++){
+        fen+=sum/fenmu[i]*fenzi[i];
+    }
+    
+    long a=fen/sum;
+    long b=abs(fen%sum);
+    if(b==0){
+        cout<<a<<endl;
+        return 0;
+    }
+    long r=gcd(b, sum);
+    b/=r;
+    sum/=r;
+    if(a==0&&fen<0)
+        cout<<'-'<<b<<'/'<<sum<<endl;
+    else if(a!=0)
+        cout<<a<<' '<<b<<'/'<<sum<<endl;
+    else
+        cout<<b<<'/'<<sum<<endl;
+    //cout<<'-'<<b<<'/'<<sum<<endl;
+}
