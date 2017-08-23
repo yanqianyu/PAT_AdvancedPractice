@@ -1,0 +1,49 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+int dectoten(string s){
+    int num=0;
+    for(int i=0;i<s.size();i++){
+        if(s[i]>='0'&&s[i]<='9')
+            num=num*10+s[i]-'0';
+        else if(s[i]>='A'&&s[i]<='F')
+            num=num*10+s[i]-'A'+10;
+    }
+    return num;
+}
+string tento13(int a){
+    vector<char> res;
+    int b;
+    while(a!=0){
+        b=a%13;
+        if(b>=0&&b<=9)
+            res.push_back(b+'0');
+        else if(b==10)
+            res.push_back('A');
+        else if(b==11)
+            res.push_back('B');
+        else if(b==12)
+            res.push_back('C');
+        a/=13;
+    }
+    string s="";
+    if(res.size()<2)
+        s="0";
+    for(int i=res.size()-1;i>=0;i--)
+        s+=res[i];
+    return s;
+}
+int main(){
+    string a,b,c;
+    cin>>a>>b>>c;
+    int x,y,z;
+    x=dectoten(a);
+    y=dectoten(b);
+    z=dectoten(c);
+    string m,l,n;
+    m=tento13(x);
+    l=tento13(y);
+    n=tento13(z);
+    cout<<'#'<<m<<l<<n<<endl;
+    return 0;
+}
