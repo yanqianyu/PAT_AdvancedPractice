@@ -1,0 +1,50 @@
+#include <iostream>
+#include <vector>
+#include <stack>
+using namespace std;
+struct TreeNode{
+    TreeNode(int v):val(v),left(NULL),right(NULL){};
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+};
+vector<int> ans;
+void post(TreeNode* root){
+    if(root==NULL)
+        return;
+    post(root->left);
+    post(root->right);
+    ans.push_back(root->val);
+}
+int id=0;
+int n=0;
+char s[8];
+TreeNode* build(){
+    TreeNode* root=NULL;
+    int num=0;
+    if(id<2*n){
+        scanf("%s",s);
+        if(s[1]=='u'){
+            scanf("%d",&num);
+            root=new TreeNode(num);
+            id++;
+        }else if(s[1]=='o'){
+            id++;
+            return NULL;
+        }
+        root->left=build();
+        root->right=build();
+    }
+    return root;
+}
+int main(){
+    cin>>n;
+    TreeNode* root=build();
+    post(root);
+    for(int i=0;i<ans.size();i++){
+        if(i!=ans.size()-1)
+            cout<<ans[i]<<' ';
+        else
+            cout<<ans[i]<<endl;
+    }
+}
