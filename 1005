@@ -1,0 +1,30 @@
+#include <iostream>
+#include <vector>
+#include <map>
+using namespace std;
+int main(){
+    int m,n;
+    cin>>m>>n;
+    map<long,long> MyMap;
+    map<long,long>::iterator it;
+    long temp;
+    for(int i=0;i<m*n;i++){
+        cin>>temp;
+        it=MyMap.find(temp);
+        if(it==MyMap.end())
+            MyMap.insert(pair<long, long>(temp,1));
+        else{
+            it->second++;
+        }
+    }
+    long res=-1,max=-1;
+    for(it=MyMap.begin();it!=MyMap.end();it++){
+        if(it->second>max){
+            max=it->second;
+            res=it->first;
+        }
+    }
+    cout<<res<<endl;
+    return 0;
+    
+}
