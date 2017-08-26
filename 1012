@@ -1,0 +1,34 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+int main(){
+    int n;
+    cin>>n;
+    vector<int> nc(n);
+    for(int i=0;i<n;i++)
+        cin>>nc[i];
+    cin>>n;
+    vector<int> np(n);
+    for(int i=0;i<n;i++)
+        cin>>np[i];
+    sort(nc.begin(),nc.end());
+    sort(np.begin(),np.end());
+    int i=0,j=0;
+    long res=0;
+    for(;i<nc.size()&&j<np.size();i++,j++){
+        if(nc[i]>=0||np[j]>=0){
+            break;
+        }
+        res+=(long)(nc[i])*np[j];
+    }
+    i=nc.size()-1;
+    j=np.size()-1;
+    for(;i>=0&&j>=0;i--,j--){
+        if(nc[i]<0||np[j]<0){
+            break;
+        }
+        res+=(long)(nc[i])*np[j];
+    }
+    cout<<res<<endl;
+}
