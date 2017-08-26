@@ -1,0 +1,22 @@
+#include <iostream>
+#include <sstream>
+#include <algorithm>
+using namespace std;
+int main(){
+    int a,b;
+    cin>>a>>b;
+    int res=a+b;
+    stringstream ss;
+    ss<<res;
+    string s=ss.str();
+    reverse(s.begin(), s.end());
+    string ress="";
+    for(int i=0;i<s.size();i++){
+        if(i%3==0&&i!=0&&s[i]!='-')
+            ress+=',';
+        ress+=s[i];
+    }
+    reverse(ress.begin(), ress.end());
+    cout<<ress<<endl;
+    return 0;
+}
