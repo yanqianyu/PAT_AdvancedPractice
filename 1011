@@ -1,0 +1,58 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+struct stu{
+    string name;
+    char sex;
+    string subject;
+    int grade;
+};
+int main(){
+    int n;
+    cin>>n;
+    vector<stu> vec(n);
+    for(int i=0;i<n;i++){
+        cin>>vec[i].name>>vec[i].sex>>vec[i].subject>>vec[i].grade;
+    }
+    int mela=0,female=0;
+    int mg=101,fg=-1;
+    bool mflag=false,fflag=false;
+    for(int i=0;i<n;i++){
+        if(vec[i].sex=='F'){
+            if(vec[i].grade>fg){
+                female=i;
+                fg=vec[i].grade;
+                fflag=true;
+            }
+        }
+        else if(vec[i].sex=='M'){
+            if(vec[i].grade<mg){
+                mela=i;
+                mg=vec[i].grade;
+                mflag=true;
+            }
+        }
+    }
+    //cout<<mflag<<fflag<<endl;
+    if(mflag&&fflag){
+        cout<<vec[female].name<<' '<<vec[female].subject<<endl;
+        cout<<vec[mela].name<<' '<<vec[mela].subject<<endl;
+        cout<<vec[female].grade-vec[mela].grade<<endl;
+    }
+    else if(mflag){
+        cout<<"Absent"<<endl;
+        cout<<vec[mela].name<<' '<<vec[mela].subject<<endl;
+        cout<<"NA"<<endl;
+    }
+    else if(fflag){
+        cout<<vec[female].name<<' '<<vec[female].subject<<endl;
+        cout<<"Absent"<<endl;
+        cout<<"NA"<<endl;
+    }
+    else{
+        cout<<"Absent"<<endl;
+        cout<<"Absent"<<endl;
+        cout<<"NA"<<endl;
+    }
+    return 0;
+}
