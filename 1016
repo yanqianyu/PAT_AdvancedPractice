@@ -1,0 +1,59 @@
+#include <iostream>
+#include <vector>
+#include <map>
+using namespace std;
+
+const int MAX_SIZE=100;
+struct Node
+{
+    int id;
+    int childs_num;
+    vector<int> childs;
+};
+
+void count_leafs(const Node *tree,Node node,map<int,int>& m,int depth)
+{
+    if(m[depth]==0) m[depth]=0;
+    if(node.childs_num==0){
+        ++m[depth];
+        return;
+    }
+    vector<int> childs=node.childs;
+    for(size_t i=0;i<childs.size();++i){
+        count_leafs(tree,tree[childs[i]],m,depth+1);
+    }
+}
+
+int main()
+{
+    int n, m;
+    cin>>n>>m;
+    Node tree[MAX_SIZE];
+    for(int i=0;i<MAX_SIZE;++i){
+        tree[i].id=0;
+        tree[i].childs_num=0;
+    }
+    int id,k;
+    while(m--){
+        cin>>id>>k;
+        tree[id].id=id;
+        tree[id].childs_num=k;
+        int child;
+        while(k--){
+            cin>>child;
+            tree[id].childs.push_back(child);
+        }
+    }
+    map<int,int> result;
+    count_leafs(tree,tree[1],result,1);
+    bool first=true;
+    for(map<int,int>::iterator iter=result.begin();iter!=result.end();++iter){
+        if(first){
+            cout<<iter->second;
+            first=false;
+        }else{
+            cout<<" "<<iter->second;
+        }
+    }
+    return 0;
+}
