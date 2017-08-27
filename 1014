@@ -1,0 +1,41 @@
+#include <iostream>
+#include <iomanip>
+#include <map>
+using namespace std;
+int main(){
+    int n1;
+    cin>>n1;
+    int exp;
+    double coe;
+    map<int,double> m;
+    map<int,double>::iterator it;
+    for(int i=0;i<n1;i++){
+        cin>>exp>>coe;
+        it=m.find(exp);
+        if(it==m.end())
+            m.insert(pair<int, double>(exp,coe));
+        else
+            it->second+=coe;
+    }
+    cin>>n1;
+    for(int i=0;i<n1;i++){
+        cin>>exp>>coe;
+        it=m.find(exp);
+        if(it==m.end())
+            m.insert(pair<int, double>(exp,coe));
+        else
+            it->second+=coe;
+    }
+    int sum=0;
+    for(it=m.begin();it!=m.end();it++){
+        if(it->second!=0.0&&it->second!=-0.0)
+            sum++;
+    }
+    cout<<sum;
+    for(map<int,double>::reverse_iterator rit=m.rbegin();rit!=m.rend();rit++){
+        if(rit->second!=0.0&&rit->second!=-0.0)
+            printf(" %d %.1lf",rit->first,rit->second);
+    }
+    cout<<endl;
+    return 0;
+}
