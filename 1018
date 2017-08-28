@@ -1,0 +1,78 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+struct per{
+    string name;
+    string signin;
+    string signout;
+};
+bool sortin(per a,per b){
+    int x=0,y=0;
+    int temp=0;
+    int i=0;
+    for(i=0;i<a.signin.size();i++){
+        if(a.signin[i]>='0'&&a.signin[i]<='9'){
+            temp=temp*10+a.signin[i]-'0';
+        }
+        else{
+            x=x*60+temp;
+            temp=0;
+        }
+    }
+    x=x*60+temp;
+    temp=0;
+    for(i=0;i<b.signin.size();i++){
+        if(b.signin[i]>='0'&&b.signin[i]<='9'){
+            temp=temp*10+b.signin[i]-'0';
+        }
+        else{
+            y=y*60+temp;
+            temp=0;
+        }
+    }
+    y=y*60+temp;
+    temp=0;
+    return x<y;
+}
+bool sortout(per a,per b){
+    int x=0,y=0;
+    int temp=0;
+    int i=0;
+    for(i=0;i<a.signout.size();i++){
+        if(a.signout[i]>='0'&&a.signout[i]<='9'){
+            temp=temp*10+a.signout[i]-'0';
+        }
+        else{
+            x=x*60+temp;
+            temp=0;
+        }
+    }
+    x=x*60+temp;
+    temp=0;
+    for(i=0;i<b.signout.size();i++){
+        if(b.signout[i]>='0'&&b.signout[i]<='9'){
+            temp=temp*10+b.signout[i]-'0';
+        }
+        else{
+            y=y*60+temp;
+            temp=0;
+        }
+    }
+    y=y*60+temp;
+    temp=0;
+    return x>y;
+}
+int main(){
+    int n;
+    cin>>n;
+    vector<per> vec(n);
+    for(int i=0;i<n;i++) {
+        cin>>vec[i].name>>vec[i].signin>>vec[i].signout;
+    }
+    sort(vec.begin(),vec.end(),sortin);
+    cout<<vec[0].name<<' ';
+    sort(vec.begin(),vec.end(),sortout);
+    cout<<vec[0].name<<endl;
+    return 0;
+}
