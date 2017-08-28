@@ -1,0 +1,23 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+int main(){
+    int n;
+    cin>>n;
+    vector<int> vec(n);
+    for(int i=0;i<n;i++){
+        cin>>vec[i];
+    }
+    int res=0;
+    res+=(vec[0]-0)*6;
+    for(int i=1;i<n;i++){
+        res+=5;
+        if(vec[i]>vec[i-1])
+            res+=(vec[i]-vec[i-1])*6;
+        else
+            res+=(vec[i-1]-vec[i])*4;
+    }
+    res+=5;
+    cout<<res<<endl;
+    return 0;
+}
