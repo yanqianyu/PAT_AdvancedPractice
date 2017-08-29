@@ -1,0 +1,45 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include <math.h>
+#include <map>
+#include <iomanip>
+using namespace std;
+struct node{
+    int exp;
+    double coe;
+};
+int main(){
+    int n1;
+    cin>>n1;
+    vector<node> vec1(n1);
+    for(int i=0;i<n1;i++){
+        cin>>vec1[i].exp>>vec1[i].coe;
+    }
+    int n2;
+    cin>>n2;
+    vector<node> vec2(n2);
+    for(int i=0;i<n2;i++){
+        cin>>vec2[i].exp>>vec2[i].coe;
+    }
+    map<int,double> res;
+    map<int,double>::iterator it;
+    for(int i=0;i<n2;i++){
+        for(int j=0;j<n1;j++){
+            int tempexp=vec1[j].exp+vec2[i].exp;
+            double tempcoe=vec1[j].coe*vec2[i].coe;
+            it=res.find(tempexp);
+            if(it==res.end())
+                res.insert(pair<int,double>(tempexp,tempcoe));
+            else
+                it->second+=tempcoe;
+        }
+    }
+    int sum=0;
+    for(it=res.begin();it!=res.end();it++)
+        sum++;
+    cout<<sum;
+    for(map<int,double>::reverse_iterator rit=res.rbegin();rit!=res.rend();rit++)
+        cout<<' '<<rit->first<<' '<<fixed<<setprecision(1)<<rit->second;
+    return 0;
+}
