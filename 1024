@@ -1,0 +1,48 @@
+#include<cstdio>
+#include<string>
+#include<map>
+using namespace std;
+  
+int a[2001][4];
+map<string, int> ids;
+char id[10];
+int grade[102];
+const char *c = "ACME";
+int main() {
+    int n, m;
+    scanf("%d %d", &n, &m);
+    for (int i = 0; i < n; i++) {
+        scanf("%s%d%d%d", id, &a[i][1], &a[i][2], &a[i][3]);
+        a[i][0] = (a[i][1] + a[i][2] + a[i][3]) / 3;
+        ids[id] = i;
+    }
+    for (int i = 0; i < 4; i++) {
+        fill(grade, grade + 101, 0);
+        for (int j = 0; j < n; j++) {
+            grade[a[j][i]]++;
+        }
+        for (int j = 99; j >= 0; j--) {
+            grade[j] += grade[j + 1];
+        }
+        for (int j = 0; j < n; j++) {
+            a[j][i] = grade[a[j][i] + 1] + 1;
+        }
+    }
+    for (; m; m--) {
+        scanf("%s", id);
+        map<string, int>::iterator t = ids.find(id);
+        if (t == ids.end()) {
+            printf("N/A\n");
+        }
+        else {
+            int x = 0;
+            for (int i = 1; i < 4; i++) {
+                if (a[t->second][i] < a[t->second][x]) {
+                    x = i;
+                }
+            }
+            printf("%d %c\n", a[t->second][x], c[x]);
+        }
+    }
+    return 0;
+}
