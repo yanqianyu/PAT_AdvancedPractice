@@ -1,0 +1,78 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+struct patrank{
+    long id;
+    int grade;
+    int final_rank;
+    int localtion_number;
+    int local_rank;
+};
+bool sort1(patrank a,patrank b){
+    if(a.grade>b.grade)
+        return true;
+    else if(a.grade==b.grade)
+        return a.id<b.id;
+    return false;
+}
+void getfinal(vector<patrank> &total){
+    int temp=1,ra=1;
+    total[0].final_rank=1;
+    for(int i=1;i<total.size();i++){
+        if(total[i].grade==total[i-1].grade){
+            total[i].final_rank=temp;
+            ra++;
+        }
+        else{
+            ra++;
+            total[i].final_rank=ra;
+            temp=ra;
+        }
+    }
+}
+void getlocal(vector<patrank> &vec){
+    int temp=1,ra=1;
+    vec[0].local_rank=1;
+    for(int i=1;i<vec.size();i++){
+        if(vec[i].grade==vec[i-1].grade){
+            vec[i].local_rank=temp;
+            ra++;
+        }
+        else{
+            ra++;
+            vec[i].local_rank=ra;
+            temp=ra;
+        }
+    }
+}
+int main(){
+    int n;
+    cin>>n;
+    vector<vector<patrank>> vec(n);
+    vector<patrank> total;
+    int i=1;
+    while(n--){
+        int k;
+        cin>>k;
+        while(k--){
+            patrank temp;
+            cin>>temp.id>>temp.grade;
+            temp.localtion_number=i;
+            vec[i-1].push_back(temp);
+            //total.push_back(temp);
+        }
+        sort(vec[i-1].begin(),vec[i-1].end(),sort1);
+        getlocal(vec[i-1]);
+        for(int k=0;k<vec[i-1].size();k++)
+            total.push_back(vec[i-1][k]);
+        i++;
+    }
+    sort(total.begin(),total.end(),sort1);
+    getfinal(total);
+    cout<<total.size()<<endl;
+    for(int i=0;i<total.size();i++){
+        cout<<total[i].id<<' '<<total[i].final_rank<<' '<<total[i].localtion_number<<' '<<total[i].local_rank<<endl;
+    }
+    return 0;
+}
